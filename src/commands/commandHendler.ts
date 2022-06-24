@@ -15,9 +15,12 @@ const commands: ICommads = {
   prnt_scrn: printScreen,
 };
 
-export const commandHendler = async (commandLine: string) => {
+export const commandHendler = async (commandLine: string): Promise<string> => {
   const [command, ...args] = commandLine.split(' ');
-  let commandArgs = args.map((item) => +item);
 
-  return await commands[command](...commandArgs);
+  const [arg1, arg2] = args.map((item) => +item);
+
+  return (await commands[command](arg1, arg2)) as Promise<string> | string;
 };
+
+export default commandHendler;

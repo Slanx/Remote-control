@@ -1,5 +1,13 @@
-import robot, { Bitmap } from 'robotjs';
+import robot from 'robotjs';
 import Jimp from 'jimp';
+
+const swapColorChannel = (bmp: robot.Bitmap) => {
+  const image = bmp.image as Buffer;
+  const { width, height } = bmp;
+  for (let i = 0; i < width * height * 4; i += 4) {
+    [image[i], image[i + 2]] = [image[i + 2], image[i]];
+  }
+};
 
 export const printScreen = async () => {
   const { x, y } = robot.getMousePos();
@@ -9,7 +17,7 @@ export const printScreen = async () => {
 
   swapColorChannel(bitmap);
 
-  const image = new Jimp({ data: bitmap.image, width, height });
+  const image = new Jimp({ data: bitmap.image as Buffer, width, height });
 
   const base64 = await image.getBase64Async('image/png');
 
@@ -18,8 +26,4 @@ export const printScreen = async () => {
   return `prnt_scrn ${formatedBase64}`;
 };
 
-const swapColorChannel = (bmp: Bitmap) => {
-  for (let i = 0; i < bmp.width * bmp.height * 4; i += 4) {
-    [bmp.image[i], bmp.image[i + 2]] = [bmp.image[i + 2], bmp.image[i]];
-  }
-};
+export default printScreen;
