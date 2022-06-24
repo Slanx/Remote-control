@@ -14,3 +14,7 @@ Thumbs.db
 
 # Logs
 npm-debug.log
+
+#Repository configuration files
+.gitignore
+package-lock.json
