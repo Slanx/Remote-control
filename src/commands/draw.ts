@@ -17,24 +17,28 @@ export const drawCircle = (radius: number) => {
 };
 
 export const drawRectangle = (width: number, height: number) => {
-  const { x, y } = robot.getMousePos();
+  let { x, y } = robot.getMousePos();
 
   robot.mouseToggle('down');
 
   for (let i = 0; i <= height; i += 1) {
-    robot.moveMouse(x, y - i);
+    y += 1;
+    robot.moveMouse(x, y);
   }
 
   for (let i = 0; i <= width; i += 1) {
-    robot.moveMouse(x + i, y);
+    x += 1;
+    robot.moveMouse(x, y);
   }
 
   for (let i = 0; i <= height; i += 1) {
-    robot.moveMouse(x, y + i);
+    y -= 1;
+    robot.moveMouse(x, y);
   }
 
   for (let i = 0; i <= width; i += 1) {
-    robot.moveMouse(x - i, y);
+    x -= 1;
+    robot.moveMouse(x, y);
   }
 
   robot.mouseToggle('up');
